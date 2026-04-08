@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ເຂົ້າສູ່ລະບົບ - ບຸນມາ POS</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .login-container { background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); width: 350px; text-align: center; }
+        h2 { margin-bottom: 10px; color: #1a73e8; }
+        p { color: #5f6368; margin-bottom: 30px; font-size: 0.9rem; }
+        .input-group { text-align: left; margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #3c4043; font-weight: 500; }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid #dadce0; border-radius: 8px; font-size: 1rem; box-sizing: border-box; }
+        .input-group input:focus { border-color: #1a73e8; outline: none; box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
+        .btn-login { width: 100%; padding: 12px; background-color: #1a73e8; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: background 0.3s; }
+        .btn-login:hover { background-color: #1557b0; }
+        .error-msg { color: #d93025; font-size: 0.85rem; margin-top: 15px; min-height: 1em; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>ບຸນມາ POS</h2>
+        <p>ລະບົບຈັດການຮ້ານຄ້າ</p>
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="username" autofocus>
+        </div>
+        <div class="input-group">
+            <label>password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        <button class="btn-login" onclick="handleLogin()">Login</button>
+        <p class="error-msg" id="message"></p>
+    </div>
+    <script>
+        // ข้อมูลพนักงานสมมติ
+        const employees = { "Sit": { name: "Sitthisone ktv", pass: "1234" } };
+        function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msg = document.getElementById('message');
+            if (employees[user] && employees[user].pass === pass) {
+                // เก็บข้อมูลลง SessionStorage
+                sessionStorage.setItem('empId', user);
+                sessionStorage.setItem('empName', employees[user].name);
+                window.location.href = "index.html";
+            } else { msg.innerText = "ລະຫັດຜ່ານພະນັກງານບໍ່ຖືກຕ້ອງ!"; }
+        }
+    </script>
+</body>
+</html>

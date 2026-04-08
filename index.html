@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bounma POS </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="checkLogin()">
+    <div class="header">
+        <div class="brand">Bounma POS</div>
+        <div class="emp-info">
+            ຜູ້ໃຊ້ງານ: <span id="empNameDisplay"></span>
+            <button onclick="logout()" class="btn-logout">Log out</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="controls shadow">
+            <input type="text" id="barcodeInput" placeholder="ສະແກນບາໂຄ໊ດ...">
+            <input type="text" id="nameInput" placeholder="ພິມຊື່ສິນຄ້າ...">
+            <button onclick="addFromInputs()" class="btn-primary">ເພີ່ມສິນຄ້າ</button>
+        </div>
+
+        <div class="cart-section shadow">
+            <table id="cartTable">
+                <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th width="10%">ຮູບ</th>
+                        <th>ຊື່ສິນຄ້າ</th>
+                        <th width="15%">ລາຄາ</th>
+                        <th width="20%">ຈຳນວນ</th>
+                        <th width="15%">ລວມ</th>
+                        <th width="10%">ການຈັດການ</th>
+                    </tr>
+                </thead>
+                <tbody id="cartBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="checkout-section shadow">
+            <div class="grand-total">ຍອດລວມ: <span id="totalPrice">0</span> ກີບ</div>
+          <div class="payment-section">
+    <input type="number" id="cashInput" placeholder="ຮັບເງິນມາ..." style="width: 100%; margin-bottom: 10px; padding: 12px; border-radius: 8px; border: 1px solid #ddd;">
+
+    <div class="button-group" style="display: flex; flex-direction: column; gap: 10px;">
+        
+        <button onclick="calculateChange()" class="btn-secondary" style="width: 100%; padding: 12px; background-color: #2d3436; color: white; border: none; border-radius: 8px; cursor: pointer;">
+            ຄິດໄລ່ເງິນທອນ
+        </button>
+
+        <button onclick="showQRCode()" class="btn-qr" style="width: 100%; padding: 12px; background-color: #6c5ce7; color: white; border: none; border-radius: 8px; cursor: pointer;">
+            📱 ສະແກນຈ່າຍ (QR Code)
+        </button>
+        
+    </div>
+</div>
+            <div class="change-info">ເງິນທອນ: <span id="changePrice">0</span> ກີບ</div>
+            <button onclick="prepareReceipt()" class="btn-print-receipt">ພິມໃບບິນ</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

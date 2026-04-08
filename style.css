@@ -1,0 +1,90 @@
+
+/* style.css - โทนสีเรียบหรู: ขาว, เทา, ฟ้าเข้ม */
+/* 1. ดึงฟอนต์ Phetsarath OT จาก Google Fonts (หรือแหล่งที่รองรับ) */
+@import url('https://fonts.googleapis.com/css2?family=Phetsarath+OT&display=swap');
+
+/* 2. ตั้งค่าให้ทั้งเว็บไซต์ */
+* {
+    /* ลำดับคือ: ภาษาอังกฤษใช้ Times New Roman, ภาษาลาวใช้ Phetsarath OT */
+    font-family: "Times New Roman", "Phetsarath OT", serif !important;
+}
+
+/* 3. ปรับขนาดตัวหนังสือให้พอดี */
+body {
+    font-size: 16px; /* ปรับขนาดตามความเหมาะสม */
+    line-height: 1.6; /* ช่วยให้วรรคตอนภาษาลาวไม่อัดแน่นจนเกินไป */
+}
+body { margin: 0; padding: 0; font-family: 'Segoe UI', 'Tahoma', sans-serif; background-color: #f8f9fa; color: #333; }
+.shadow { box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-radius: 12px; background: #fff; }
+
+/* Header */
+.header { background: #1a1a1a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+.brand { font-size: 1.5rem; font-weight: bold; color: #1a73e8; }
+.btn-logout { background: none; border: none; color: #ccc; text-decoration: underline; cursor: pointer; margin-left: 15px; }
+.btn-logout:hover { color: #f94144; }
+
+/* Main Container */
+.container { max-width: 1200px; margin: 20px auto; padding: 0 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+
+/* แผงควบคุม (บนสุด) */
+.controls { grid-column: 1 / -1; padding: 20px; display: flex; gap: 10px; align-items: center; }
+.controls input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+.btn-primary { padding: 12px 24px; background-color: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; transition: 0.3s; }
+.btn-primary:hover { background-color: #1557b0; }
+
+/* ส่วนตาราง */
+.cart-section { padding: 10px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
+th { background-color: #fcfcfc; color: #555; font-weight: 600; text-transform: uppercase; font-size: 0.85rem; }
+td { font-size: 1rem; }
+.product-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
+.qty-input { width: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 5px; text-align: center; }
+.btn-delete { color: #d93025; background: none; border: none; cursor: pointer; font-weight: bold; }
+
+/* ส่วนชำระเงิน (ด้านขวา) */
+.checkout-section { padding: 30px; display: flex; flex-direction: column; gap: 20px; align-self: flex-start; position: sticky; top: 20px; }
+.grand-total { font-size: 1.8rem; font-weight: bold; color: #1a1a1a; border-bottom: 2px solid #eee; padding-bottom: 15px; text-align: right;}
+.pay-input-group { display: flex; gap: 10px; }
+.pay-input-group input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; }
+.btn-calc { padding: 12px; background-color: #4a4a4a; color: white; border: none; border-radius: 8px; cursor: pointer; }
+.change-info { text-align: right; font-size: 1.2rem; color: #555; }
+.btn-print-receipt { width: 100%; padding: 15px; background-color: #28a745; color: white; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+.btn-print-receipt:hover { background-color: #218838; }
+
+/* ใบเสร็จ (สำหรับพิมพ์) */
+@media print {
+    body * { visibility: hidden; }
+    #receiptModal, #receiptModal * { visibility: visible; }
+    #receiptModal { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; }
+    .no-print { display: none; }
+}
+/* --- ส่วนปรับแต่งสำหรับมือถือ (Responsive) --- */
+.main-container {
+    display: flex;
+    flex-wrap: wrap; /* ถ้าจอมือถือแคบ ส่วนสรุปยอดเงินจะตกลงมาข้างล่างอัตโนมัติ */
+    gap: 20px;
+    padding: 10px;
+}
+
+.cart-section, .summary-box {
+    flex: 1 1 300px; /* ยืดหยุ่นตามหน้าจอ แต่ไม่ต่ำกว่า 300px */
+    width: 100%;
+}
+
+.product-img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* แถม: ปรับตารางให้เลื่อนซ้ายขวาได้ในมือถือ ถ้าชื่อสินค้ามันยาวเกินไป */
+.cart-section {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 400px; /* ป้องกันตารางบีบจนอ่านไม่ออก */
+}
