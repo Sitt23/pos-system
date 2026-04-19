@@ -256,3 +256,16 @@ function closeQR() {
 
 // เรียกใช้งานตรวจสอบการล็อกอินเมื่อหน้าจอโหลด
 window.onload = checkLogin;
+function printReceipt() {
+    // 1. จัดรูปแบบข้อความที่จะพิมพ์ (ใช้ภาษาลาวได้)
+    let text = "      Bounma POS\n";
+    text += "--------------------------------\n";
+    text += "ລາຍການสินค้า: " + "เบียร์ลาว" + "\n"; // ตรงนี้ดึงจากตัวแปรของคุณ
+    text += "ราคารวม: " + "50,000" + " Kip\n";
+    text += "--------------------------------\n";
+    text += "    ขอบใจที่ใช้บริการ\n\n\n";
+
+    // 2. ส่งไปที่แอป RawBT (ใช้คำสั่งพิเศษ rawbt:)
+    let rawbtUrl = "rawbt:base64," + btoa(unescape(encodeURIComponent(text)));
+    window.location.href = rawbtUrl;
+}
