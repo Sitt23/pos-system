@@ -88,3 +88,25 @@ table {
     width: 100%;
     min-width: 400px; /* ป้องกันตารางบีบจนอ่านไม่ออก */
 }
+@media print {
+    /* กำหนดขนาดหน้ากระดาษให้พอดีเครื่อง 58mm */
+    @page {
+        size: 58mm auto;
+        margin: 0;
+    }
+    
+    body {
+        width: 58mm;
+        margin: 0;
+        padding: 2mm;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* ขยายตัวหนังสือให้ชัดบนกระดาษเล็ก */
+    .receipt-header { font-size: 16px; font-weight: bold; text-align: center; }
+    .receipt-item { font-size: 14px; }
+    .receipt-total { font-size: 18px; border-top: 1px dashed #000; }
+
+    /* ซ่อนปุ่มและส่วนที่ไม่ใช่บิล */
+    button, .nav-bar, .input-section { display: none !important; }
+}
