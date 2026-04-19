@@ -252,3 +252,7 @@ function showQRCode() {
 function closeQR() {
     const wrapper = document.getElementById('qrWrapper');
     if (wrapper) document.body.removeChild(wrapper);
+}
+
+// เรียกใช้งานตรวจสอบการล็อกอินเมื่อหน้าจอโหลด
+window.onload = checkLogin;
