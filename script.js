@@ -269,3 +269,23 @@ function printReceipt() {
     let rawbtUrl = "rawbt:base64," + btoa(unescape(encodeURIComponent(text)));
     window.location.href = rawbtUrl;
 }
+function printReceipt() {
+    // 1. สร้างข้อมูลใบเสร็จแบบ HTML สั้นๆ
+    const receiptHtml = `
+        <div style="width: 200px; font-family: sans-serif; text-align: center; padding: 10px;">
+            <h2 style="margin: 0;">Bounma POS</h2>
+            <p>--------------------------------</p>
+            <div style="text-align: left;">
+                <p>ລາຍການ: เบียร์ลาว</p>
+                <p>ราคารวม: 50,000 Kip</p>
+            </div>
+            <p>--------------------------------</p>
+            <p>ขอบใจที่ใช้บริการ</p>
+        </div>
+    `;
+
+    // 2. ใช้คำสั่งส่งไป RawBT ในโหมดรูปภาพ (Image Mode)
+    // เราจะใช้การส่ง URL ของหน้าเว็บเราไปให้ RawBT จัดการวาดเป็นภาพให้ครับ
+    const rawbtUrl = "rawbt:html," + encodeURIComponent(receiptHtml);
+    window.location.href = rawbtUrl;
+}
