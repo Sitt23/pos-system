@@ -270,22 +270,32 @@ function printReceipt() {
     window.location.href = rawbtUrl;
 }
 function printReceipt() {
-    // 1. สร้างข้อมูลใบเสร็จแบบ HTML สั้นๆ
+    // ดึงค่าราคารวมจากหน้าจอ (สมมติว่าคุณใช้ id="total-price")
+    let total = document.getElementById("total-price").innerText;
+
+    // สร้างเนื้อหาใบเสร็จแบบ HTML เพื่อส่งให้ RawBT วาดเป็นรูปภาพ
     const receiptHtml = `
-        <div style="width: 200px; font-family: sans-serif; text-align: center; padding: 10px;">
+    <html>
+    <body style="width: 300px; padding: 10px; font-family: 'Arial', sans-serif;">
+        <div style="text-align: center;">
             <h2 style="margin: 0;">Bounma POS</h2>
-            <p>--------------------------------</p>
-            <div style="text-align: left;">
-                <p>ລາຍການ: เบียร์ลาว</p>
-                <p>ราคารวม: 50,000 Kip</p>
-            </div>
-            <p>--------------------------------</p>
-            <p>ขอบใจที่ใช้บริการ</p>
+            <p style="margin: 5px 0;">--------------------------------</p>
         </div>
+        <div style="font-size: 16px;">
+            <p><b>ລາຍການ:</b> เบียร์ลาว</p>
+            <p><b>ราคารวม:</b> ${total} Kip</p>
+        </div>
+        <div style="text-align: center;">
+            <p style="margin: 5px 0;">--------------------------------</p>
+            <p style="font-size: 14px;">ขอบใจที่ใช้บริการ</p>
+            <br>
+        </div>
+    </body>
+    </html>
     `;
 
-    // 2. ใช้คำสั่งส่งไป RawBT ในโหมดรูปภาพ (Image Mode)
-    // เราจะใช้การส่ง URL ของหน้าเว็บเราไปให้ RawBT จัดการวาดเป็นภาพให้ครับ
+    // ส่งข้อมูลไปที่แอป RawBT โดยสั่งให้มัน "วาดเป็นภาพ" (rawbt:html)
+    // วิธีนี้จะทำให้ภาษาลาวออกมาสวยงามแน่นอน
     const rawbtUrl = "rawbt:html," + encodeURIComponent(receiptHtml);
     window.location.href = rawbtUrl;
 }
