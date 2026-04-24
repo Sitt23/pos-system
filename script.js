@@ -1,4 +1,5 @@
 
+
 // --- ส่วนที่ 1: ประกาศตัวแปรส่วนกลาง ---
 let currentTotal = 0; // ตัวแปรเก็บยอดรวม (ตัวเลขล้วน) เพื่อคำนวณเงินทอนให้แม่นยำ
 let cart = [];
@@ -152,6 +153,7 @@ function calculateChange() {
 }
 
 // --- ส่วนที่ 7: ระบบพิมพ์ใบเสร็จ (ดึงมาจาก Code เก่าและปรับปรุงให้สวยงาม) ---
+// --- แก้ไขในส่วนเตรียมใบเสร็จ ---
 function prepareReceipt() {
     const cash = document.getElementById('cashInput').value;
     const change = document.getElementById('changePrice').innerText;
@@ -164,45 +166,58 @@ function prepareReceipt() {
     const now = new Date();
     const dateTimeStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
 
+    // ส่วนที่ปรับปรุง: เพิ่ม word-wrap และจัดการ table-layout
     const receiptContent = `
-        <div id="receiptModal" style="max-width:300px; margin:auto; padding:20px; font-family:'Phetsarath OT', 'Times New Roman', serif; border:1px solid #ddd; background:white;">
-            <div style="text-align:center; font-weight:bold; font-size:1.2rem;">ບຸນມາ POS</div>
-            <div style="text-align:center; font-size:0.8rem; border-bottom:1px dashed #333; padding-bottom:10px;">ຂອບໃຈທີ່ໃຊ້ບໍລິການ</div>
+        <div id="receiptModal" style="max-width:280px; margin:auto; padding:10px; font-family:'Phetsarath OT', sans-serif; border:1px solid #ddd; background:white; box-sizing: border-box; overflow-x: hidden;">
+            <div style="text-align:center; font-weight:bold; font-size:1.1rem; margin-bottom:5px;">ບຸນມາ POS</div>
+            <div style="text-align:center; font-size:0.75rem; border-bottom:1px dashed #333; padding-bottom:8px; margin-bottom:8px;">ຂອບໃຈທີ່ໃຊ້ບໍລິການ</div>
             
-            <div style="font-size:0.8rem; margin:10px 0;">
+            <div style="font-size:0.75rem; margin-bottom:10px; line-height: 1.4;">
                 ວັນທີ: ${dateTimeStr}<br>
                 ພະນັກງານ: ${empName} (${empId})
             </div>
             
-            <table style="width:100%; font-size:0.8rem; border-bottom:1px dashed #333; margin-bottom:10px;">
+            <table style="width:100%; font-size:0.75rem; border-bottom:1px dashed #333; margin-bottom:10px; table-layout: fixed; border-collapse: collapse;">
                 <thead style="text-align:left;">
-                    <tr><th>ລາຍການ</th><th width="20%">ຈຳນວນ</th><th width="30%">ລວມ</th></tr>
+                    <tr>
+                        <th style="width:55%;">ລາຍການ</th>
+                        <th style="width:15%; text-align:center;">ຈຳນວນ</th>
+                        <th style="width:30%; text-align:right;">ລວມ</th>
+                    </tr>
                 </thead>
-                <tbody>
-                    ${cart.map(item => `<tr><td>${item.name}</td><td>${item.qty}</td><td>${(item.price * item.qty).toLocaleString()}</td></tr>`).join('')}
+                <tbody style="line-height: 1.4;">
+                    ${cart.map(item => `
+                        <tr>
+                            <td style="word-break: break-word; padding-right: 5px; vertical-align: top;">${item.name}</td>
+                            <td style="text-align:center; vertical-align: top;">${item.qty}</td>
+                            <td style="text-align:right; vertical-align: top;">${(item.price * item.qty).toLocaleString()}</td>
+                        </tr>
+                    `).join('')}
                 </tbody>
             </table>
             
-            <div style="text-align:right; font-size:1rem; font-weight:bold;">ຍອດລວມ: ${currentTotal.toLocaleString()} ກີບ</div>
-            <div style="text-align:right; font-size:0.9rem;">ຮັບເງິນ: ${parseFloat(cash).toLocaleString()} ກີບ</div>
-            <div style="text-align:right; font-size:1rem; font-weight:bold; color:#1a73e8; margin-bottom:15px;">ເງິນທອນ: ${change} ກີບ</div>
+            <div style="text-align:right; font-size:0.95rem; font-weight:bold;">ຍອດລວມ: ${currentTotal.toLocaleString()} ກີບ</div>
+            <div style="text-align:right; font-size:0.85rem;">ຮັບເງິນ: ${parseFloat(cash).toLocaleString()} ກີบ</div>
+            <div style="text-align:right; font-size:0.95rem; font-weight:bold; color:#000; border-top: 1px solid #eee; margin-top:5px; padding-top:5px; color:#la73e8;">ເງິນທອນ: ${change} ກີບ</div>
             
-            <div style="text-align:center; font-size:0.8rem; border-top:1px dashed #333; padding-top:10px;">
+            <div style="text-align:center; font-size:0.7rem; border-top:1px dashed #333; padding-top:10px; margin-top:15px; color: #555;">
                 ** ກະລຸນາກວດສອບເງິນທອນ **<br>
                 www.boonma-pos.com
             </div>
-            <button onclick="window.print()" class="no-print" style="width:100%; margin-top:20px; padding:10px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer;">ຢືນຢັນການພິມ</button>
-            <button onclick="closeReceipt()" class="no-print" style="width:100%; margin-top:5px; padding:10px; background:#f4f4f4; border:1px solid #ddd; border-radius:5px; cursor:pointer;">ປິດ</button>
+
+            <div class="no-print" style="margin-top: 20px;">
+                <button onclick="window.print()" style="width:100%; padding:10px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer; font-size:1rem; margin-bottom:5px;">ຢືນຢັນການພິມ</button>
+                <button onclick="closeReceipt()" style="width:100%; padding:10px; background:#f4f4f4; border:1px solid #ddd; border-radius:5px; cursor:pointer; font-size:1rem;">ປິດ</button>
+            </div>
         </div>
     `;
 
     const modalDiv = document.createElement('div');
     modalDiv.id = 'receiptWrapper';
-    modalDiv.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:1000;';
+    modalDiv.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:1000; padding: 10px;';
     modalDiv.innerHTML = receiptContent;
     document.body.appendChild(modalDiv);
 }
-
 function closeReceipt() {
     const wrapper = document.getElementById('receiptWrapper');
     if (wrapper) document.body.removeChild(wrapper);
@@ -254,5 +269,3 @@ function closeQR() {
     if (wrapper) document.body.removeChild(wrapper);
 }
 
-// เรียกใช้งานตรวจสอบการล็อกอินเมื่อหน้าจอโหลด
-window.onload = checkLogin;
